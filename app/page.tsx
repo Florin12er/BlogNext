@@ -1,5 +1,5 @@
 import { Footer } from "@/components/article/Footer";
-import { HeroSection } from "@/components/article/HeroSection";
+import { HeroSection} from "@/components/article/HeroSection"
 import { Navbar } from "@/components/article/NavBar";
 
 export default function Home() {
@@ -10,6 +10,6 @@ export default function Home() {
         <HeroSection />
       </main>
       <Footer />
-    </div>
+    </div> 
   );
 }

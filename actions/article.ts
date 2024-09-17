@@ -1,6 +1,7 @@
 "use server";
 
 import * as z from "zod";
+import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 import { currentUser } from "@/lib/auth";
@@ -124,17 +125,30 @@ export const getArticle = async (id: string) => {
     return { error: "Failed to fetch article." };
   }
 };
-
-export const getArticles = async (page = 1, limit = 10) => {
+export const getArticles = async (page = 1, limit = 10, search?: string) => {
   try {
+    const skip = (page - 1) * limit;
+
+    let whereCondition: Prisma.ArticleWhereInput = {};
+
+    if (search) {
+      whereCondition = {
+        OR: [
+          { title: { contains: search, mode: "insensitive" } },
+          { content: { contains: search, mode: "insensitive" } },
+        ],
+      };
+    }
+
     const articles = await db.article.findMany({
+      where: whereCondition,
       take: limit,
-      skip: (page - 1) * limit,
+      skip: skip,
       orderBy: { createdAt: "desc" },
       include: { author: true, tags: true },
     });
 
-    const totalArticles = await db.article.count();
+    const totalArticles = await db.article.count({ where: whereCondition });
 
     return {
       articles,
@@ -142,6 +156,7 @@ export const getArticles = async (page = 1, limit = 10) => {
       currentPage: page,
     };
   } catch (error) {
+    console.error("Error fetching articles:", error);
     return { error: "Failed to fetch articles." };
   }
 };

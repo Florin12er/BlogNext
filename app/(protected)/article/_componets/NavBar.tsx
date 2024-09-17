@@ -14,7 +14,7 @@ export const NavBar = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      router.push(`/articles?search=${encodeURIComponent(searchQuery.trim())}`);
+      router.push(`/article?search=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
 
@@ -23,7 +23,7 @@ export const NavBar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link href="/articles" className="flex-shrink-0">
+            <Link href="/article" className="flex-shrink-0">
               <span className="text-2xl font-bold text-purple-600">Bloggy</span>
             </Link>
           </div>
@@ -40,7 +40,7 @@ export const NavBar = () => {
                 <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               </div>
             </form>
-            <Link href="/articles/new">
+            <Link href="/article/new">
               <Button variant="outline" className="mr-4">
                 <PlusIcon className="mr-2 h-4 w-4" /> New Article
               </Button>
