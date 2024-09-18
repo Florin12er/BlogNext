@@ -12,6 +12,7 @@ import { FaUser } from "react-icons/fa";
 import { useCurrentUser } from "@/hooks/user-current-user";
 import { LogoutButton } from "./LogoutButton";
 import { ExitIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 
 export const UserButton = () => {
   const user = useCurrentUser();
@@ -28,11 +29,14 @@ export const UserButton = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-40" align="end">
           <LogoutButton>
-            <DropdownMenuItem className="flex justify-between">
+            <DropdownMenuItem className="flex justify-between cursor-pointer">
               Logout
               <ExitIcon />
             </DropdownMenuItem>
           </LogoutButton>
+          <DropdownMenuItem>
+            <Link href="/settings">Settings</Link>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

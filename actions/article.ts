@@ -151,7 +151,10 @@ export const getArticles = async (page = 1, limit = 10, search?: string) => {
     const totalArticles = await db.article.count({ where: whereCondition });
 
     return {
-      articles,
+      articles: articles.map((article) => ({
+        ...article,
+        createdAt: article.createdAt.toISOString(),
+      })),
       totalPages: Math.ceil(totalArticles / limit),
       currentPage: page,
     };

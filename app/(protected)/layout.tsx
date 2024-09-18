@@ -1,3 +1,4 @@
+import "@mdxeditor/editor/style.css";
 interface ProtectedLayoutProps {
   children: React.ReactNode;
 }

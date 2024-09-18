@@ -1,11 +1,12 @@
 "use client";
+
 import { useState } from "react";
-import { Editor } from "@tinymce/tinymce-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useRouter } from "next/navigation";
 import { createArticle } from "@/actions/article";
+import { Editor } from "../_componets/Editor";
 
 const NewArticle = () => {
   const router = useRouter();
@@ -13,7 +14,6 @@ const NewArticle = () => {
   const [content, setContent] = useState("");
   const [published, setPublished] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const apiKey = process.env.NEXT_PUBLIC_TINYMCE_API_KEY;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +23,6 @@ const NewArticle = () => {
       const result = await createArticle({ title, content, published });
       if (result.error) {
         console.error(result.error);
-        // Handle error, maybe show an alert
       } else {
         router.push(`/article/${result.article?.id}`);
       }
@@ -61,27 +60,8 @@ const NewArticle = () => {
           >
             Content
           </label>
-          <Editor
-            apiKey={apiKey}
-            initialValue=""
-            init={{
-              height: 500,
-              menubar: false,
-              plugins: [
-                "advlist autolink lists link image charmap preview anchor",
-                "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table paste code help wordcount",
-              ],
-              toolbar:
-                "undo redo | formatselect | bold italic backcolor | " +
-                "alignleft aligncenter alignright alignjustify | " +
-                "bullist numlist outdent indent | removeformat | help",
-              content_style:
-                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-            }}
-            onEditorChange={(newContent) => setContent(newContent)}
-          />
         </div>
+        <Editor content={content} setContent={setContent} />
         <div className="flex items-center">
           <Checkbox
             id="published"
