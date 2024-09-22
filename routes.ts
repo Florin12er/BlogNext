@@ -36,4 +36,4 @@ export const apiAuthPrefix: string = "/api/auth";
  * This is the page that the user will be redirected to after login
  */
 
-export const DEFAULT_LOGIN_REDIRECT: string = "/articles";
+export const DEFAULT_LOGIN_REDIRECT: string = "/article";

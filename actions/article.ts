@@ -163,3 +163,73 @@ export const getArticles = async (page = 1, limit = 10, search?: string) => {
     return { error: "Failed to fetch articles." };
   }
 };
+
+export const getUserArticles = async (page = 1, limit = 10) => {
+  const user = await currentUser();
+
+  if (!user) {
+    return { error: "Unauthorized!" };
+  }
+
+  try {
+    const skip = (page - 1) * limit;
+
+    const articles = await db.article.findMany({
+      where: { authorId: user.id },
+      take: limit,
+      skip: skip,
+      orderBy: { createdAt: "desc" },
+      include: { tags: true },
+    });
+
+    const totalArticles = await db.article.count({
+      where: { authorId: user.id },
+    });
+
+    return {
+      articles: articles.map((article) => ({
+        ...article,
+        createdAt: article.createdAt.toISOString(),
+      })),
+      totalPages: Math.ceil(totalArticles / limit),
+      currentPage: page,
+    };
+  } catch (error) {
+    console.error("Error fetching user articles:", error);
+    return { error: "Failed to fetch user articles." };
+  }
+};
+export const getUserArticle = async (id = "") => {
+  const user = await currentUser();
+
+  if (!user) {
+    return { error: "Unauthorized!" };
+  }
+
+  try {
+    const article = await db.article.findUnique({
+      where: {
+        id: id,
+        authorId: user.id,
+      },
+      include: { tags: true },
+    });
+
+    if (!article) {
+      return {
+        error: "Article not found or you don't have permission to access it.",
+      };
+    }
+
+    return {
+      article: {
+        ...article,
+        createdAt: article.createdAt.toISOString(),
+        updatedAt: article.updatedAt.toISOString(),
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching user article:", error);
+    return { error: "Failed to fetch the article." };
+  }
+};

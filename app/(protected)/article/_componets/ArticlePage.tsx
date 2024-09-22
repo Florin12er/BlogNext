@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { CalendarIcon, UserIcon, TagIcon } from "lucide-react";
 import TableOfContents from "./TableOfContent";
+import { Spinner } from "@/components/Spinner";
 
 const ClientSideMDXEditor = dynamic(
   () => import("../_componets/ClientMDXEditor"),
@@ -92,7 +93,11 @@ export const ArticlePage: React.FC<ScrollableArticleProps> = ({ article }) => {
   }, [toc]);
 
   if (!article) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spinner size="lg" />
+      </div>
+    );
   }
 
   return (

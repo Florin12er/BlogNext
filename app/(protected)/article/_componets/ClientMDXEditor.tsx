@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import {
   MDXEditor,
   MDXEditorMethods,
+  imagePlugin,
   headingsPlugin,
   listsPlugin,
   quotePlugin,
@@ -12,6 +13,8 @@ import {
   codeMirrorPlugin,
   UndoRedo,
   toolbarPlugin,
+  linkPlugin,
+  thematicBreakPlugin,
 } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
@@ -44,7 +47,10 @@ const ClientSideMDXEditor: React.FC<ClientSideMDXEditorProps> = ({
         headingsPlugin(),
         listsPlugin(),
         quotePlugin(),
+        imagePlugin(),
         tablePlugin(),
+        linkPlugin(),
+        thematicBreakPlugin(),
         codeBlockPlugin({
           defaultCodeBlockLanguage: "js",
         }),

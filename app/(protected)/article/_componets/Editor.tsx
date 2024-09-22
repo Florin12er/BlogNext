@@ -80,11 +80,6 @@ export const Editor = ({ content, setContent }: EditorProps) => {
         tablePlugin(),
         linkDialogPlugin(),
         frontmatterPlugin(),
-        thematicBreakPlugin(),
-        directivesPlugin({
-          directiveDescriptors: [AdmonitionDirectiveDescriptor],
-        }),
-        frontmatterPlugin(),
         directivesPlugin({
           directiveDescriptors: [AdmonitionDirectiveDescriptor],
         }),

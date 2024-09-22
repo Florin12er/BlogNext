@@ -1,4 +1,3 @@
-// app/article/[articleId]/page.tsx
 import { getArticle } from "@/actions/article";
 import { notFound } from "next/navigation";
 import { ArticlePage as ScrollableArticle } from "../_componets/ArticlePage";
